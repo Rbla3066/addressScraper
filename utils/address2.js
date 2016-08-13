@@ -11,6 +11,7 @@ module.exports = (name, zip, callback) => {
 			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
 		}
 	}, (err, res, html) => {
+		if(!html) return callback(html);
 		var $ = cheerio.load(html);
 		var path = $('.clickstream-link').eq(0).attr('href');
 		console.log(path);
@@ -24,6 +25,7 @@ module.exports = (name, zip, callback) => {
 				"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
 			}
 		}, (err, res2, html2) => {
+			if(!res2.body) return callback("err")
 			var $ = cheerio.load(res2.body);
 			var address = $('.address-card').eq(0).text();
 			return callback(address);
